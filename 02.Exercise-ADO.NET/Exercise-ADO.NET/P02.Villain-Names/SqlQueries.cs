@@ -16,5 +16,9 @@ namespace P02.Villain_Names
               HAVING COUNT(mv.VillainId) > 3 
              ORDER BY COUNT(mv.VillainId)
              ";
+
+        
+        public const string GetVillainNameById =
+            @"SELECT Name FROM Villains WHERE Id = @Id";
     }
 }
