@@ -11,27 +11,35 @@ namespace P02.Villain_Names
                 new SqlConnection(Config.ConnnectionString);
             await connection.OpenAsync();
 
-            string result = await GetAllVilliansAndCountOfTheirMinionsAsync(sqlConnection);
+            string result = await GetAllVilliansAndCountOfTheirMinionsAsync(connection);
             Console.WriteLine(result);
         }
-    }
 
-    private static async Task<string> GetAllVilliansAndCountOfTheirMinionsAsync(SqlConnection sqlConnection)
-    {
-        StringBuilder sb = new StringBuilder(); 
 
-        SqlCommand sqlCommand =
-            new SqlCommand(SqlQueries.GetAllVilliansAndCountOfTheirMinions, sqlConnection);
-        SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
-        while (reader.Read())
+        static async Task<string> GetAllVilliansAndCountOfTheirMinionsAsync(SqlConnection sqlConnection)
         {
-            string villainName = (string)reader["Name"];
-            int minionsCount = (int)reader["MinionsCount"];
+            StringBuilder sb = new StringBuilder();
+
+            SqlCommand sqlCommand =
+                new SqlCommand(SqlQueries.GetAllVilliansAndCountOfTheirMinions, sqlConnection);
+            SqlDataReader reader = await sqlCommand.ExecuteReaderAsync();
+            while (reader.Read())
+            {
+                string villainName = (string)reader["Name"];
+                int minionsCount = (int)reader["MinionsCount"];
 
 
-            sb.AppendLine($"{villainName} - {minionsCount}");
+                sb.AppendLine($"{villainName} - {minionsCount}");
+            }
+
+            return sb.ToString().TrimEnd();
         }
 
-        return sb.ToString().TrimEnd();
+        static async Task<string> GetVillainWithAllMinionsByIdAsync(SqlConnection sqlConnection, int villainId)
+        {
+            SqlCommand sqlCommand = 
+                new SqlCommand(SqlQueries.GetVillainNameById, sqlConnection);
+            sqlCommand.Parameters.AddWithValue("@Id", villainId);
+        }
     }
-}   
+}
