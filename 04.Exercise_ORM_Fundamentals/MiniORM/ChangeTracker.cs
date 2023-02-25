@@ -1,7 +1,15 @@
 ﻿namespace MiniORM
 {
-    public class ChangeTracker
+    internal class ChangeTracker<T>
+    where T : class, new()
     {
-        // TODO: Create your ChangeTracker class here.
+        private readonly IList<T> allEntities;
+        private readonly IList<T> added;
+        private readonly IList<T> removed;
+
+        public ChangeTracker(IEnumerable<T> allEntities)
+        {
+            this.allEntities = CloneEntities(allEntities);
+        }
     }
 }
