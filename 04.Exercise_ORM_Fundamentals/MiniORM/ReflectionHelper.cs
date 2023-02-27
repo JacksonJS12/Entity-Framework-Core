@@ -7,13 +7,13 @@ internal static class ReflectionHelper
     /// Replaces an auto-generated backing field with an object instance.
     /// Commonly used to set properties without a setter.
     /// </summary>
-    public static void ReplaceBackingField(object sourceObj, string propertyName, object targetObj)
+    public static void ReplaceBackingField(object sourceObj, string propertyName, object newValue)
     {
         var backingField = sourceObj.GetType()
             .GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetField)
             .First(fi => fi.Name == $"<{propertyName}>k__BackingField");
 
-        backingField.SetValue(sourceObj, targetObj);
+        backingField.SetValue(sourceObj, newValue);
     }
 
     /// <summary>
