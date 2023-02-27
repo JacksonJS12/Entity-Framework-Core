@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.Data.SqlClient;
+namespace MiniORM;
 /// <summary>
 /// Used for accessing a database, inserting/updating/deleting entities
 /// and mapping database columns to entity classes.
 /// </summary>
-namespace MiniORM;
 
 internal class DatabaseConnection
 {
