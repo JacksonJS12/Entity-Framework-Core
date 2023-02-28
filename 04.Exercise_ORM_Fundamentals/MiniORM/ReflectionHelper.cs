@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 
 namespace MiniORM;
+
 internal static class ReflectionHelper
 {
     /// <summary>
@@ -26,4 +27,3 @@ internal static class ReflectionHelper
         return hasAttribute;
     }
 }
-
