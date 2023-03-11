@@ -1,9 +1,9 @@
-﻿namespace SoftUni.Data.Models
-    public partial class Project
+﻿namespace SoftUni.Models;
+public partial class Project
 {
     public Project()
     {
-        this.Employees = new HashSet<Employee>();
+        Employees = new HashSet<Employee>();
     }
 
     public int ProjectId { get; set; }

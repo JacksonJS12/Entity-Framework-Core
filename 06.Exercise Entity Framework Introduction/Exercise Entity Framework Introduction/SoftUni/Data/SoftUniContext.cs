@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using SoftUni.Data.Models;
+using SoftUni.Models;
 
 namespace SoftUni.Data;
 public partial class SoftUniContext : DbContext
@@ -152,6 +152,10 @@ public partial class SoftUniContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+        });
+        modelBuilder.Entity<EmployeeProject>(entity =>
+        {
+            entity.HasKey(pk => new object[] { pk.EmployeeId, pk.ProjectId });
         });
 
         OnModelCreatingPartial(modelBuilder);

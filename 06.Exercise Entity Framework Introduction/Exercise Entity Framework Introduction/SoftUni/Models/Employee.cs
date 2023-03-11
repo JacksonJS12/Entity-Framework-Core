@@ -1,11 +1,11 @@
-﻿namespace SoftUni.Data.Models;
+﻿namespace SoftUni.Models;
 public class Employee
 {
     public Employee()
     {
-        this.Departments = new HashSet<Department>();
-        this.InverseManager = new HashSet<Employee>();
-        this.Projects = new HashSet<Project>();
+        Departments = new HashSet<Department>();
+        InverseManager = new HashSet<Employee>();
+        Projects = new HashSet<Project>();
     }
 
     public int EmployeeId { get; set; }

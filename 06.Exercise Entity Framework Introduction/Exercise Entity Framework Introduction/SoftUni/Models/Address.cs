@@ -1,9 +1,9 @@
-﻿namespace SoftUni.Data.Models;
+﻿namespace SoftUni.Models;
 public class Address
 {
     public Address()
     {
-        this.Employees = new HashSet<Employee>();
+        Employees = new HashSet<Employee>();
     }
 
     public int AddressId { get; set; }
