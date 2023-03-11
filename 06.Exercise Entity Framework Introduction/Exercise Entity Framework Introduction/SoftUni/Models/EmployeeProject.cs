@@ -1,9 +1,7 @@
-﻿using SoftUni.Data.Models;
-
-namespace SoftUni;
+﻿namespace SoftUni.Models;
 internal class EmployeeProject
 {
-    public  int EmployeeId { get; set; }
+    public int EmployeeId { get; set; }
     public virtual Employee Employee { get; set; }
     public int ProjectId { get; set; }
     public virtual Project Project { get; set; }
