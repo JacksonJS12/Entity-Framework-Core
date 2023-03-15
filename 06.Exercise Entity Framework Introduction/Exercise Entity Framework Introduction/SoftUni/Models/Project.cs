@@ -1,21 +1,18 @@
 ﻿namespace SoftUni.Models;
-
-public class Project
+public partial class Project
 {
     public Project()
     {
-        this.EmployeesProjects = new HashSet<EmployeeProject>();
+        Employees = new HashSet<Employee>();
     }
 
     public int ProjectId { get; set; }
-
     public string Name { get; set; } = null!;
-
     public string? Description { get; set; }
-
     public DateTime StartDate { get; set; }
-
     public DateTime? EndDate { get; set; }
 
-    public virtual ICollection<EmployeeProject> EmployeesProjects { get; set; }
+    public virtual ICollection<Employee> Employees { get; set; }
+    public IEnumerable<EmployeeProject> EmployeesProjects { get; set; }
 }
+
