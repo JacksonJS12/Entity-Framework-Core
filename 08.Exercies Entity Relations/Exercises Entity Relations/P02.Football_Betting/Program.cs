@@ -1,4 +1,4 @@
-﻿namespace P02.Football_Betting;
+﻿namespace P02_FootballBetting;
 internal class Program
 {
     static void Main(string[] args)
