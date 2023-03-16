@@ -7,5 +7,6 @@ public class Team
     public int TeamId { get; set; }
     
     [Required] //NOT NULL constrain in SQL
+    [MaxLength(vALIDA)]
     public string Name { get; set; }
 }
