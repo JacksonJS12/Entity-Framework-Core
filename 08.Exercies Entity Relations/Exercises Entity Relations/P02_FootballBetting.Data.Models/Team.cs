@@ -19,4 +19,7 @@ public class Team
     public int Initials { get; set; }
 
     public decimal Budget { get; set; }
+    public int PrimaryKitColorId { get; set; }
+    public int SecondaryKitColorId { get; set; }
+    public int TownId { get; set; }
 }
