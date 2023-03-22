@@ -1,9 +1,8 @@
-﻿namespace P02_FootballBetting.Data.Models;
+﻿using P02_FootballBetting.Data.Common;
+
+namespace P02_FootballBetting.Data.Models;
 
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-using Common;
 
 public class Color
 {
