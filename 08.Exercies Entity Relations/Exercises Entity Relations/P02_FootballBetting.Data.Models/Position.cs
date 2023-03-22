@@ -1,22 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Security.AccessControl;
-using P02_FootballBetting.Data.Common;
+﻿namespace P02_FootballBetting.Data.Models;
 
-namespace P02_FootballBetting.Data.Models;
+using System.ComponentModel.DataAnnotations;
+
+using Common;
 
 public class Position
 {
     public Position()
     {
-        this.PLayers = new HashSet<PLayer>();
+        this.Players = new HashSet<Player>();
     }
+
     [Key]
     public int PositionId { get; set; }
 
-    [Required]
     [MaxLength(ValidationConstants.PositionNameMaxLength)]
     public string Name { get; set; } = null!;
 
-    public virtual ICollection<PLayer> PLayers { get; set; }
+    public virtual ICollection<Player> Players { get; set; }
 }
-
