@@ -50,7 +50,7 @@ public class FootballBettingContext : DbContext
             entity.HasKey(ps => new { ps.GameId, ps.PlayerId });
         });
 
-        modelBuilder.Entity<Team>(entity =>
+        modelBuilder.Entity<Team>(entity => 
         {
             entity
                 .HasOne(t => t.PrimaryKitColor)
