@@ -18,9 +18,10 @@ public class Color
     [MaxLength(ValidationConstants.ColorNameMaxLength)]
     public string Name { get; set; } = null!;
 
-    //[InverseProperty(nameof(Team.PrimaryKitColor))]
+    [InverseProperty(nameof(Team.PrimaryKitColor))]
     public virtual ICollection<Team> PrimaryKitTeams { get; set; }
 
-    //[InverseProperty(nameof(Team.SecondaryKitColor))]
-    public virtual ICollection<Team> SecondaryKitTeams { get; set; }
+    [InverseProperty("SecondaryKitColor")]
+    public ICollection<Team> SecondaryKitTeams{ get; set; } 
+
 }
