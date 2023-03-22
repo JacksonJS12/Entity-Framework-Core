@@ -22,6 +22,6 @@ public class Color
     public ICollection<Team> PrimaryKitTeams{ get; set; }
 
     [InverseProperty("SecondaryKitColor")]
-    public ICollection<Team> SecondaryKitTeams{ get; set; }
+    public ICollection<Team> SecondaryKitTeams{ get; set; } 
 }
 
