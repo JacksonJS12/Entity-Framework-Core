@@ -1,4 +1,4 @@
-﻿Uusing System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -55,10 +55,10 @@ namespace P02_FootballBetting.Data.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Budget = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,11 +92,11 @@ namespace P02_FootballBetting.Data.Migrations
                     TeamId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LogoUrl = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    LogoUrl = table.Column<string>(type: "nvarchar(2048)", maxLength: 2048, nullable: true),
                     Initials = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: false),
+                    Budget = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     PrimaryKitColorId = table.Column<int>(type: "int", nullable: false),
                     SecondaryKitColorId = table.Column<int>(type: "int", nullable: false),
-                    Budget = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TownId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -106,14 +106,12 @@ namespace P02_FootballBetting.Data.Migrations
                         name: "FK_Teams_Colors_PrimaryKitColorId",
                         column: x => x.PrimaryKitColorId,
                         principalTable: "Colors",
-                        principalColumn: "ColorId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ColorId");
                     table.ForeignKey(
                         name: "FK_Teams_Colors_SecondaryKitColorId",
                         column: x => x.SecondaryKitColorId,
                         principalTable: "Colors",
-                        principalColumn: "ColorId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ColorId");
                     table.ForeignKey(
                         name: "FK_Teams_Towns_TownId",
                         column: x => x.TownId,
@@ -130,8 +128,8 @@ namespace P02_FootballBetting.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HomeTeamId = table.Column<int>(type: "int", nullable: false),
                     AwayTeamId = table.Column<int>(type: "int", nullable: false),
-                    HomeTeamGoals = table.Column<int>(type: "int", nullable: false),
-                    AwayTeamGoals = table.Column<int>(type: "int", nullable: false),
+                    HomeTeamGoals = table.Column<byte>(type: "tinyint", nullable: false),
+                    AwayTeamGoals = table.Column<byte>(type: "tinyint", nullable: false),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HomeTeamBetRate = table.Column<double>(type: "float", nullable: false),
                     AwayTeamBetRate = table.Column<double>(type: "float", nullable: false),
@@ -145,18 +143,16 @@ namespace P02_FootballBetting.Data.Migrations
                         name: "FK_Games_Teams_AwayTeamId",
                         column: x => x.AwayTeamId,
                         principalTable: "Teams",
-                        principalColumn: "TeamId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "TeamId");
                     table.ForeignKey(
                         name: "FK_Games_Teams_HomeTeamId",
                         column: x => x.HomeTeamId,
                         principalTable: "Teams",
-                        principalColumn: "TeamId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "TeamId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "PLayers",
+                name: "Players",
                 columns: table => new
                 {
                     PlayerId = table.Column<int>(type: "int", nullable: false)
@@ -169,15 +165,15 @@ namespace P02_FootballBetting.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PLayers", x => x.PlayerId);
+                    table.PrimaryKey("PK_Players", x => x.PlayerId);
                     table.ForeignKey(
-                        name: "FK_PLayers_Positions_PositionId",
+                        name: "FK_Players_Positions_PositionId",
                         column: x => x.PositionId,
                         principalTable: "Positions",
                         principalColumn: "PositionId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PLayers_Teams_TeamId",
+                        name: "FK_Players_Teams_TeamId",
                         column: x => x.TeamId,
                         principalTable: "Teams",
                         principalColumn: "TeamId");
@@ -213,7 +209,7 @@ namespace P02_FootballBetting.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PlayerStatistics",
+                name: "PlayersStatistics",
                 columns: table => new
                 {
                     GameId = table.Column<int>(type: "int", nullable: false),
@@ -224,17 +220,17 @@ namespace P02_FootballBetting.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerStatistics", x => new { x.GameId, x.PlayerId });
+                    table.PrimaryKey("PK_PlayersStatistics", x => new { x.GameId, x.PlayerId });
                     table.ForeignKey(
-                        name: "FK_PlayerStatistics_Games_GameId",
+                        name: "FK_PlayersStatistics_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
                         principalColumn: "GameId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PlayerStatistics_PLayers_PlayerId",
+                        name: "FK_PlayersStatistics_Players_PlayerId",
                         column: x => x.PlayerId,
-                        principalTable: "PLayers",
+                        principalTable: "Players",
                         principalColumn: "PlayerId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -260,18 +256,18 @@ namespace P02_FootballBetting.Data.Migrations
                 column: "HomeTeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PLayers_PositionId",
-                table: "PLayers",
+                name: "IX_Players_PositionId",
+                table: "Players",
                 column: "PositionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PLayers_TeamId",
-                table: "PLayers",
+                name: "IX_Players_TeamId",
+                table: "Players",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PlayerStatistics_PlayerId",
-                table: "PlayerStatistics",
+                name: "IX_PlayersStatistics_PlayerId",
+                table: "PlayersStatistics",
                 column: "PlayerId");
 
             migrationBuilder.CreateIndex(
@@ -301,7 +297,7 @@ namespace P02_FootballBetting.Data.Migrations
                 name: "Bets");
 
             migrationBuilder.DropTable(
-                name: "PlayerStatistics");
+                name: "PlayersStatistics");
 
             migrationBuilder.DropTable(
                 name: "Users");
@@ -310,7 +306,7 @@ namespace P02_FootballBetting.Data.Migrations
                 name: "Games");
 
             migrationBuilder.DropTable(
-                name: "PLayers");
+                name: "Players");
 
             migrationBuilder.DropTable(
                 name: "Positions");
