@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using P02_FootballBetting.Data;
 
@@ -11,9 +12,10 @@ using P02_FootballBetting.Data;
 namespace P02_FootballBetting.Data.Migrations
 {
     [DbContext(typeof(FootballBettingContext))]
-    partial class FootballBettingContextModelSnapshot : ModelSnapshot
+    [Migration("20230227195632_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +53,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bets", (string)null);
+                    b.ToTable("Bets");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Color", b =>
@@ -69,7 +71,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasKey("ColorId");
 
-                    b.ToTable("Colors", (string)null);
+                    b.ToTable("Colors");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Country", b =>
@@ -87,7 +89,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasKey("CountryId");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Game", b =>
@@ -132,7 +134,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasIndex("HomeTeamId");
 
-                    b.ToTable("Games", (string)null);
+                    b.ToTable("Games");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Player", b =>
@@ -157,7 +159,7 @@ namespace P02_FootballBetting.Data.Migrations
                     b.Property<int>("SquadNumber")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamId")
+                    b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
                     b.HasKey("PlayerId");
@@ -166,7 +168,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Players", (string)null);
+                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.PlayerStatistic", b =>
@@ -190,7 +192,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("PlayersStatistics", (string)null);
+                    b.ToTable("PlayersStatistics");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Position", b =>
@@ -208,7 +210,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasKey("PositionId");
 
-                    b.ToTable("Positions", (string)null);
+                    b.ToTable("Positions");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Team", b =>
@@ -253,7 +255,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasIndex("TownId");
 
-                    b.ToTable("Teams", (string)null);
+                    b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Town", b =>
@@ -276,7 +278,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Towns", (string)null);
+                    b.ToTable("Towns");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.User", b =>
@@ -312,7 +314,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Bet", b =>
@@ -363,9 +365,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasOne("P02_FootballBetting.Data.Models.Team", "Team")
                         .WithMany("Players")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeamId");
 
                     b.Navigation("Position");
 

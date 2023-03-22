@@ -1,6 +1,9 @@
-﻿namespace P02_FootballBetting.Data.Common;
-public static class DbConfig
+﻿namespace P02_FootballBetting.Data.Common
 {
-    public const string ConnectionString =
-        @"Server=DESKTOP-CPVUD3U;Database=Bet388;Integrated Security=True;Encrypt=False;";
+    public static class DbConfig
+    {
+        // ReSharper disable once InconsistentNaming
+        public const string ConnectionString =
+            @"Server=DESKTOP-2ASBARL\SQLEXPRESS;Database=Bet388;Integrated Security=True;Encrypt=False;";
+    }
 }

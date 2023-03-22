@@ -12,8 +12,8 @@ using P02_FootballBetting.Data;
 namespace P02_FootballBetting.Data.Migrations
 {
     [DbContext(typeof(FootballBettingContext))]
-    [Migration("20230321151927_Initial")]
-    partial class Initial
+    [Migration("20230227200108_PlayerTeamNotNullable")]
+    partial class PlayerTeamNotNullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -103,8 +103,8 @@ namespace P02_FootballBetting.Data.Migrations
                     b.Property<double>("AwayTeamBetRate")
                         .HasColumnType("float");
 
-                    b.Property<int>("AwayTeamGoals")
-                        .HasColumnType("int");
+                    b.Property<byte>("AwayTeamGoals")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("AwayTeamId")
                         .HasColumnType("int");
@@ -118,8 +118,8 @@ namespace P02_FootballBetting.Data.Migrations
                     b.Property<double>("HomeTeamBetRate")
                         .HasColumnType("float");
 
-                    b.Property<int>("HomeTeamGoals")
-                        .HasColumnType("int");
+                    b.Property<byte>("HomeTeamGoals")
+                        .HasColumnType("tinyint");
 
                     b.Property<int>("HomeTeamId")
                         .HasColumnType("int");
@@ -137,7 +137,7 @@ namespace P02_FootballBetting.Data.Migrations
                     b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("P02_FootballBetting.Data.Models.PLayer", b =>
+            modelBuilder.Entity("P02_FootballBetting.Data.Models.Player", b =>
                 {
                     b.Property<int>("PlayerId")
                         .ValueGeneratedOnAdd()
@@ -159,7 +159,7 @@ namespace P02_FootballBetting.Data.Migrations
                     b.Property<int>("SquadNumber")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TeamId")
+                    b.Property<int>("TeamId")
                         .HasColumnType("int");
 
                     b.HasKey("PlayerId");
@@ -168,7 +168,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("PLayers");
+                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.PlayerStatistic", b =>
@@ -192,7 +192,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("PlayerStatistics");
+                    b.ToTable("PlayersStatistics");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Position", b =>
@@ -230,8 +230,8 @@ namespace P02_FootballBetting.Data.Migrations
                         .HasColumnType("nvarchar(4)");
 
                     b.Property<string>("LogoUrl")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(2048)
+                        .HasColumnType("nvarchar(2048)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -289,13 +289,13 @@ namespace P02_FootballBetting.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
 
-                    b.Property<decimal>("Budget")
+                    b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -304,8 +304,8 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -341,13 +341,13 @@ namespace P02_FootballBetting.Data.Migrations
                     b.HasOne("P02_FootballBetting.Data.Models.Team", "AwayTeam")
                         .WithMany("AwayGames")
                         .HasForeignKey("AwayTeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("P02_FootballBetting.Data.Models.Team", "HomeTeam")
                         .WithMany("HomeGames")
                         .HasForeignKey("HomeTeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("AwayTeam");
@@ -355,17 +355,19 @@ namespace P02_FootballBetting.Data.Migrations
                     b.Navigation("HomeTeam");
                 });
 
-            modelBuilder.Entity("P02_FootballBetting.Data.Models.PLayer", b =>
+            modelBuilder.Entity("P02_FootballBetting.Data.Models.Player", b =>
                 {
                     b.HasOne("P02_FootballBetting.Data.Models.Position", "Position")
-                        .WithMany("PLayers")
+                        .WithMany("Players")
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("P02_FootballBetting.Data.Models.Team", "Team")
-                        .WithMany("PLayers")
-                        .HasForeignKey("TeamId");
+                        .WithMany("Players")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Position");
 
@@ -375,20 +377,20 @@ namespace P02_FootballBetting.Data.Migrations
             modelBuilder.Entity("P02_FootballBetting.Data.Models.PlayerStatistic", b =>
                 {
                     b.HasOne("P02_FootballBetting.Data.Models.Game", "Game")
-                        .WithMany("PlayerStatistics")
+                        .WithMany("PlayersStatistics")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("P02_FootballBetting.Data.Models.PLayer", "PLayer")
-                        .WithMany("PlayerStatistics")
+                    b.HasOne("P02_FootballBetting.Data.Models.Player", "Player")
+                        .WithMany("PlayersStatistics")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Game");
 
-                    b.Navigation("PLayer");
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Team", b =>
@@ -396,13 +398,13 @@ namespace P02_FootballBetting.Data.Migrations
                     b.HasOne("P02_FootballBetting.Data.Models.Color", "PrimaryKitColor")
                         .WithMany("PrimaryKitTeams")
                         .HasForeignKey("PrimaryKitColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("P02_FootballBetting.Data.Models.Color", "SecondaryKitColor")
                         .WithMany("SecondaryKitTeams")
                         .HasForeignKey("SecondaryKitColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("P02_FootballBetting.Data.Models.Town", "Town")
@@ -445,17 +447,17 @@ namespace P02_FootballBetting.Data.Migrations
                 {
                     b.Navigation("Bets");
 
-                    b.Navigation("PlayerStatistics");
+                    b.Navigation("PlayersStatistics");
                 });
 
-            modelBuilder.Entity("P02_FootballBetting.Data.Models.PLayer", b =>
+            modelBuilder.Entity("P02_FootballBetting.Data.Models.Player", b =>
                 {
-                    b.Navigation("PlayerStatistics");
+                    b.Navigation("PlayersStatistics");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Position", b =>
                 {
-                    b.Navigation("PLayers");
+                    b.Navigation("Players");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Team", b =>
@@ -464,7 +466,7 @@ namespace P02_FootballBetting.Data.Migrations
 
                     b.Navigation("HomeGames");
 
-                    b.Navigation("PLayers");
+                    b.Navigation("Players");
                 });
 
             modelBuilder.Entity("P02_FootballBetting.Data.Models.Town", b =>
