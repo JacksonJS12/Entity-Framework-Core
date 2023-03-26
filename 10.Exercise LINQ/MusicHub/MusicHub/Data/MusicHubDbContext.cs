@@ -15,6 +15,13 @@ public class MusicHubDbContext : DbContext
     {
     }
 
+    public DbSet<Producer> Producers { get; set; }
+    public DbSet<Album> Albums { get; set; }
+    public DbSet<Song> Songs { get; set; }
+    public DbSet<Performer> Performers { get; set; }
+    public DbSet<Writer> Writers { get; set; }
+    public DbSet<SongPerformer> SongsPerformers { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -38,6 +45,11 @@ public class MusicHubDbContext : DbContext
             entity
                 .Property(a => a.ReleaseDate)
                 .HasColumnType("date");
+        });
+
+        builder.Entity<SongPerformer>(entity =>
+        {
+            entity.HasKey(sp => new { sp.PerformerId, sp.SongId });
         });
     }
 }
