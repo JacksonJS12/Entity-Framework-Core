@@ -1,16 +1,15 @@
-﻿namespace BookShop
-{
-    using Data;
-    using Initializer;
+﻿namespace BookShop;
+using Data;
+using Initializer;
 
-    public class StartUp
+public class StartUp
+{
+    public static void Main()
     {
-        public static void Main()
-        {
-            using var db = new BookShopContext();
-            DbInitializer.ResetDatabase(db);
-        }
+        using var db = new BookShopContext();
+        DbInitializer.ResetDatabase(db);
     }
 }
+
 
 

@@ -1,9 +1,9 @@
-﻿namespace BookShop.Models.Enums
+﻿namespace BookShop.Models.Enums;
+
+public enum AgeRestriction
 {
-    public enum AgeRestriction
-    {
-        Minor = 0,
-        Teen = 1,
-        Adult = 2
-    }
+    Minor = 0,
+    Teen = 1,
+    Adult = 2
 }
+
