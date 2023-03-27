@@ -1,27 +1,27 @@
-﻿using BookShop.Models.Enums;
+﻿
+namespace BookShop.Initializer.Generators;
 
-namespace BookShop.Initializer.Generators
+using BookShop.Models.Enums;
+using BookShop.Models;
+using System;
+using System.Globalization;
+
+class BookGenerator
 {
-    using BookShop.Models;
-    using System;
-    using System.Globalization;
+    #region Book Description
+    private static string bookDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+        "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
+        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris " +
+        "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
+        "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " +
+        "Excepteur sint occaecat cupidatat non proident, " +
+        "sunt in culpa qui officia deserunt mollit anim id est laborum.";
+    #endregion
 
-    class BookGenerator
+    internal static Book[] CreateBooks()
     {
-        #region Book Description
-        private static string bookDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
-            "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " +
-            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris " +
-            "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit " +
-            "in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " +
-            "Excepteur sint occaecat cupidatat non proident, " +
-            "sunt in culpa qui officia deserunt mollit anim id est laborum.";
-        #endregion
-
-        internal static Book[] CreateBooks()
+        string[] booksInput = new string[]
         {
-            string[] booksInput = new string[]
-            {
                 //Edition ReleaseDate Copies Price AgeRestriction Title
                 "1 20/01/1998 27274 15.31 2 Absalom",
                 "0 14/09/1998 16159 35.56 0 After Many a Summer Dies the Swan",
@@ -213,53 +213,53 @@ namespace BookShop.Initializer.Generators
                 "2 28/07/2010 5146 10.46 2 The Waste Land",
                 "1 17/01/2004 19962 33.99 1 The Way of All Flesh",
                 "0 10/8/2000 23466 42.61 0 The Way Through the Woods",
+        };
+
+        int bookCount = booksInput.Length;
+
+        Category[] categories = CategoryGenerator.CreateCategories();
+
+        Author[] authors = AuthorGenerator.CreateAuthors();
+
+        Book[] books = new Book[bookCount];
+
+        for (int i = 0; i < bookCount; i++)
+        {
+            string[] bookTokens = booksInput[i].Split();
+
+            int edition = int.Parse(bookTokens[0]);
+            DateTime releaseDate = DateTime.ParseExact(bookTokens[1], "d/M/yyyy", CultureInfo.InvariantCulture);
+            int copies = int.Parse(bookTokens[2]);
+            decimal price = decimal.Parse(bookTokens[3]);
+            int ageRestriction = int.Parse(bookTokens[4]);
+            string title = String.Join(" ", bookTokens, 5, bookTokens.Length - 5);
+            Category category = categories[i / 10];
+            Author author = authors[i / 5];
+
+            Book book = new Book()
+            {
+                Title = title,
+                ReleaseDate = releaseDate,
+                Description = bookDescription,
+                EditionType = (EditionType)edition,
+                Price = price,
+                Copies = copies,
+                AgeRestriction = (AgeRestriction)ageRestriction,
+                Author = author,
             };
 
-            int bookCount = booksInput.Length;
-
-            Category[] categories = CategoryGenerator.CreateCategories();
-
-            Author[] authors = AuthorGenerator.CreateAuthors();
-
-            Book[] books = new Book[bookCount];
-
-            for (int i = 0; i < bookCount; i++)
+            BookCategory bookCategory = new BookCategory()
             {
-                string[] bookTokens = booksInput[i].Split();
+                Category = category,
+                Book = book
+            };
 
-                int edition = int.Parse(bookTokens[0]);
-                DateTime releaseDate = DateTime.ParseExact(bookTokens[1], "d/M/yyyy", CultureInfo.InvariantCulture);
-                int copies = int.Parse(bookTokens[2]);
-                decimal price = decimal.Parse(bookTokens[3]);
-                int ageRestriction = int.Parse(bookTokens[4]);
-                string title = String.Join(" ", bookTokens, 5, bookTokens.Length - 5);
-                Category category = categories[i / 10];
-                Author author = authors[i / 5];
+            book.BookCategories.Add(bookCategory);
 
-                Book book = new Book()
-                {
-                    Title = title,
-                    ReleaseDate = releaseDate,
-                    Description = bookDescription,
-                    EditionType = (EditionType)edition,
-                    Price = price,
-                    Copies = copies,
-                    AgeRestriction = (AgeRestriction)ageRestriction,
-                    Author = author,
-                };
-
-                BookCategory bookCategory = new BookCategory()
-                {
-                    Category = category,
-                    Book = book
-                };
-
-                book.BookCategories.Add(bookCategory);
-
-                books[i] = book;
-            }
-
-            return books;
+            books[i] = book;
         }
+
+        return books;
     }
 }
+
