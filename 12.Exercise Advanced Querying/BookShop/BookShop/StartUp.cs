@@ -1,5 +1,4 @@
 ﻿using BookShop.Models.Enums;
-using Microsoft.EntityFrameworkCore;
 
 namespace BookShop;
 using Data;
@@ -9,33 +8,66 @@ public class StartUp
 {
     public static void Main()
     {
-        using var dbContext = new BookShopContext();
+        var dbContext = new BookShopContext();
         //DbInitializer.ResetDatabase(db);
 
-        string ageRestrictionInput = Console.ReadLine();
-        string result = GetBookByAgeRestriction(dbContext, ageRestrictionInput);
+        string input = Console.ReadLine();
+        //string result = GetBooksByAgeRestriction(dbContext, input);
+        //string result = GetGoldenBooks(dbContext);
+        string result = GetBooksByCategory(dbContext, input);
 
         Console.WriteLine(result);
     }
 
-    public static string GetBookByAgeRestriction(BookShopContext dbContext, string command)
+    public static string GetBooksByAgeRestriction(BookShopContext context, string command)
     {
-        bool hasParsed = Enum.TryParse(typeof(AgeRestriction), command, true, out object? ageRestrictionObj);
         AgeRestriction ageRestriction;
-        if (hasParsed)
+
+        var isParseSuccess = Enum.TryParse<AgeRestriction>(command, true, out ageRestriction);
+
+        if (!isParseSuccess)
         {
-            ageRestriction = (AgeRestriction)ageRestrictionObj;
-
-            string[] bookTitles = dbContext.Books
-                .Where(b => b.AgeRestriction == ageRestriction)
-                .OrderBy(b => b.Title)
-                .Select(b => b.Title)
-                .ToArray();
-
-            return String.Join(Environment.NewLine, bookTitles);
+            return string.Empty;
         }
 
-        return null;
+        string[] bookTitles = context
+            .Books
+            .Where(b => b.AgeRestriction == ageRestriction)
+            .Select(b => b.Title)
+            .OrderBy(t => t)
+            .ToArray();
+
+        return string.Join(Environment.NewLine, bookTitles);
+    }
+
+    public static string GetGoldenBooks(BookShopContext dbContext)
+    {
+        string[] bookTitles = dbContext.Books
+            .Where(b => b.EditionType == EditionType.Gold &&
+                        b.Copies < 5000)
+            .OrderBy(b => b.BookId)
+            .Select(b => b.Title)
+            .ToArray();
+
+        return String.Join(Environment.NewLine, bookTitles);
+            
+    }
+
+    public static string GetBooksByCategory(BookShopContext dbContext, string input)
+    {
+        string[] categories = input
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select(c => c.ToLower())
+            .ToArray();
+
+        string[] bookTitles = dbContext.Books
+            .Where(b => b.BookCategories
+                .Any(bc => categories.Contains(bc.Category.Name.ToLower())))
+            .OrderBy(b => b.Title)
+            .Select(b => b.Title)
+            .ToArray();
+
+        return String.Join(Environment.NewLine, bookTitles);
     }
 }
 
