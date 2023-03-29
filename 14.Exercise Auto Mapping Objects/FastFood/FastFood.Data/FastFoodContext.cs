@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using FastFood.Data.Data.Configuration;
 
 namespace FastFood.Data
 {
@@ -29,6 +30,17 @@ namespace FastFood.Data
         public DbSet<OrderItem> OrderItems { get; set; }
 
         public DbSet<Position> Positions { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder
+                    .UseSqlServer(ConnectionConfig.ConnectionString)
+                    .UseLazyLoadingProxies();
+
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

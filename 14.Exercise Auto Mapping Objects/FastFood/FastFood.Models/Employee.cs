@@ -1,11 +1,19 @@
-﻿namespace FastFood.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FastFood.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class Employee
     {
-        public int Id { get; set; }
+        public Employee()
+        {
+            this.Id = Guid.NewGuid().ToString();
+            this.Orders = new HashSet<Order>();
+        }
+        [Key]
+        public string Id { get; set; }
 
         [Required]
         [StringLength(30, MinimumLength = 3)]
@@ -19,11 +27,12 @@
         [StringLength(30, MinimumLength = 3)]
         public string Address { get; set; } = null!;
 
+        [ForeignKey(nameof(Position))]
         public int PositionId { get; set; }
 
         [Required]
-        public Position Position { get; set; } = null!;
+        public virtual Position Position { get; set; } = null!;
 
-        public ICollection<Order> Orders { get; set; } = new List<Order>(); 
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
