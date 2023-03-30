@@ -3,6 +3,6 @@
 internal class Configuration
 {
     internal static string ConnectionString
-        => "Server=DESKTOP-CPVUD3U;Database=BookShop;Integrated Security=True;";
+        => "Server=DESKTOP-SV9GMAA;Database=BookShop;Integrated Security=True;";
 }
 
