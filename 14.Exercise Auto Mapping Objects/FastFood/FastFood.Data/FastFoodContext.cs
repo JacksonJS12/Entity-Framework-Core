@@ -1,12 +1,9 @@
-﻿using System.Reflection;
-using FastFood.Common.DataConfiguration;
-
-namespace FastFood.Data
+﻿namespace FastFood.Data
 {
     using Microsoft.EntityFrameworkCore;
+
+    using Common.DataConfiguration;
     using Models;
-    using System.Collections.Generic;
-    using System.Reflection.Emit;
 
     public class FastFoodContext : DbContext
     {
@@ -20,17 +17,19 @@ namespace FastFood.Data
         {
         }
 
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; } = null!;
 
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Item> Items { get; set; }
+        public DbSet<Employee> Employees { get; set; } = null!;
 
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<Item> Items { get; set; } = null!;
 
-        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Order> Orders { get; set; } = null!;
 
-        public DbSet<Position> Positions { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; } = null!;
 
+        public DbSet<Position> Positions { get; set; } = null!;
+
+        // This will not be used in Web layer. This can be used by Test layer.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -38,7 +37,6 @@ namespace FastFood.Data
                 optionsBuilder
                     .UseSqlServer(ConnectionConfig.ConnectionString)
                     .UseLazyLoadingProxies();
-
             }
         }
 
