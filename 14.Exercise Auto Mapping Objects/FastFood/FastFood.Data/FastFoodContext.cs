@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using FastFood.Data.Data.Configuration;
+using FastFood.Common.DataConfiguration;
 
 namespace FastFood.Data
 {

@@ -1,4 +1,6 @@
-﻿namespace FastFood.Models
+﻿using FastFood.Common;
+
+namespace FastFood.Models
 {
     using System;
     using System.Collections.Generic;
@@ -15,6 +17,7 @@
             this.OrderItems = new HashSet<OrderItem>();
         }
         [Key]
+        //[MaxLength(ValidationConstants.GuidMaxLength)]
         public string Id { get; set; }
 
         [Required]
@@ -29,8 +32,9 @@
         [NotMapped]
         public decimal TotalPrice { get; set; }
 
+        //[MaxLength(ValidationConstants.GuidMaxLength)]
         [ForeignKey(nameof(Employee))]
-        public virtual string EmployeeId { get; set; }
+        public virtual string EmployeeId { get; set; } = null!;
 
         [Required]
         public virtual Employee Employee { get; set; } = null!;

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FastFood.Data.Data.Migrations
 {
     [DbContext(typeof(FastFoodContext))]
-    [Migration("20230329111108_Init")]
-    partial class Init
+    [Migration("20230330125616_Test")]
+    partial class Test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

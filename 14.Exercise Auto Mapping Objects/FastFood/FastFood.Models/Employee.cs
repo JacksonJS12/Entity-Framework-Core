@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using FastFood.Common;
 
 namespace FastFood.Models
 {
@@ -12,19 +13,19 @@ namespace FastFood.Models
             this.Id = Guid.NewGuid().ToString();
             this.Orders = new HashSet<Order>();
         }
+
+        //[MaxLength(ValidationConstants.GuidMaxLength)]
         [Key]
         public string Id { get; set; }
 
-        [Required]
-        [StringLength(30, MinimumLength = 3)]
+        [StringLength(ValidationConstants.EmployeeMaxLength, MinimumLength = 3)]
         public string Name { get; set; } = null!;
 
-        [Required]
         [Range(15, 80)]
         public int Age { get; set; }
 
         [Required]
-        [StringLength(30, MinimumLength = 3)]
+        [StringLength(ValidationConstants.EmployeeAddressMaxLength, MinimumLength = 3)]
         public string Address { get; set; } = null!;
 
         [ForeignKey(nameof(Position))]

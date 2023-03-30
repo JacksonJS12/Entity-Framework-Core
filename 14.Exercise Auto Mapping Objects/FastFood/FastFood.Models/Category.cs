@@ -1,4 +1,6 @@
-﻿namespace FastFood.Models
+﻿using FastFood.Common;
+
+namespace FastFood.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -12,8 +14,7 @@
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(30, MinimumLength = 3)]
+        [StringLength(ValidationConstants.CategoryMaxLength, MinimumLength = 3)]
         public string Name { get; set; } = null!;
 
         public virtual ICollection<Item> Items { get; set; }

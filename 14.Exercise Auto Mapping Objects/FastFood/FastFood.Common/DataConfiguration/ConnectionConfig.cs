@@ -1,4 +1,4 @@
-﻿namespace FastFood.Data.Data.Configuration
+﻿namespace FastFood.Common.DataConfiguration
 {
     public  static class ConnectionConfig
     {
