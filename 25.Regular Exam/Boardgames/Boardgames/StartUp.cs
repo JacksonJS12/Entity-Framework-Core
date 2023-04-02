@@ -7,20 +7,29 @@
     {
         public static void Main()
         {
-            var context = new BoardgamesContext();
+            //var context = new BoardgamesContext();
 
-            ResetDatabase(context, shouldDropDatabase: true);
+            //ResetDatabase(context, shouldDropDatabase: true);
 
-            var projectDir = GetProjectDirectory();
+            //var projectDir = GetProjectDirectory();
 
-            ImportEntities(context, projectDir + @"Datasets/", projectDir + @"ImportResults/");
+            //ImportEntities(context, projectDir + @"Datasets/", projectDir + @"ImportResults/");
 
-            ExportEntities(context, projectDir + @"ExportResults/");
+            //ExportEntities(context, projectDir + @"ExportResults/");
 
-            using (var transaction = context.Database.BeginTransaction())
-            {
-                transaction.Rollback();
-            }
+            //using (var transaction = context.Database.BeginTransaction())
+            //{
+            //    transaction.Rollback();
+            //}
+
+            string spell = Console.ReadLine();
+            string[] commands = Console.ReadLine()
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .ToArray();
+
+            
+                spell = spell.ToUpper();
+            
         }
 
         private static void ImportEntities(BoardgamesContext context, string baseDir, string exportDir)
