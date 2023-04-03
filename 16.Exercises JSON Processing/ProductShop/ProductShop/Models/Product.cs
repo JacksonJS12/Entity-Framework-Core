@@ -18,7 +18,7 @@ public class Product
     public virtual User Seller { get; set; } = null!;
 
     public int? BuyerId { get; set; }
-    public virtual User Buyer { get; set; } = null!;
+    public virtual User? Buyer { get; set; }
 
     public virtual ICollection<CategoryProduct> CategoriesProducts { get; set; }
 }
