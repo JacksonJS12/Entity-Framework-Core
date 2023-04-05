@@ -2,7 +2,7 @@
 {
     using System.Linq;
 
-    using PetStore.Data.Common.Models;
+    using Models;
 
     public interface IDeletableEntityRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IDeletableEntity

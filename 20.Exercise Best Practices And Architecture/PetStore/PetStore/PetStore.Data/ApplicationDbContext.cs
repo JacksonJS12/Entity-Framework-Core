@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
 
     using PetStore.Data.Common.Models;
-    using PetStore.Data.Models;
+    using Models;
 
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
