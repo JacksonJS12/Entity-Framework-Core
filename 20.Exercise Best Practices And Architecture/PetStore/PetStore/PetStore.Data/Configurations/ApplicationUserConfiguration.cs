@@ -1,6 +1,6 @@
 ﻿namespace PetStore.Data.Configurations
 {
-    using PetStore.Data.Models;
+    using Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using PetStore.Data.Common.Repos;
+    using Common.Repos;
 
     using Microsoft.EntityFrameworkCore;
 

@@ -3,7 +3,7 @@
     using System;
     using System.Threading.Tasks;
 
-    using PetStore.Data.Common;
+    using Common;
 
     using Microsoft.EntityFrameworkCore;
 
