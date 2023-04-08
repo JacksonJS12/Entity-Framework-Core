@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PetStore.Web.Models;
 using System.Diagnostics;
+using PetStore.Web.ViewModels;
 
 namespace PetStore.Web.Controllers
 {
